@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>まるい月</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+*{box-sizing:inherit}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(ellipse at 50% 35%,#1b2347 0%,#0b1029 70%,#060818 100%);color:#f3ecd8;font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;overflow:hidden;-webkit-tap-highlight-color:transparent}
+.sm{position:fixed;left:0;right:0;z-index:6;text-align:center;letter-spacing:.1em;pointer-events:none;transition:opacity 1.8s ease;text-shadow:0 0 14px #04152b}
+#seaTop{top:calc(env(safe-area-inset-top,0px) + 7vh);font-size:19px;line-height:1.9}
+#seaBot{bottom:calc(env(safe-area-inset-bottom,0px) + 7vh);font-size:14px;opacity:.7}
+.star{position:fixed;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.5}
+#stage{position:relative;width:min(43.4vw,182px);aspect-ratio:1;cursor:pointer}
+.ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(243,236,216,.28);filter:blur(1.5px);transition:box-shadow 2.4s,border-color 2.4s}
+.moon{position:absolute;inset:0;border-radius:50%;filter:blur(3px);background:radial-gradient(circle at 40% 38%,#fffaea,#f1e2b4 60%,#d9c58d);box-shadow:0 0 60px rgba(255,240,190,.35);transition:box-shadow 2.4s}
+.shade{position:absolute;inset:0;border-radius:50%;background:#0b1029;filter:blur(3px);-webkit-mask-image:linear-gradient(to right,#000 0%,#000 34%,transparent 66%);mask-image:linear-gradient(to right,#000 0%,#000 34%,transparent 66%);opacity:1;transition:opacity 2.4s ease}
+#word{position:absolute;left:8%;top:50%;width:42%;text-align:center;transform:translateY(-50%);font-size:15px;opacity:0;color:#fff7dc;text-shadow:0 0 12px #ffe9a8;transition:opacity 2.4s 1s}
+#msg{min-height:3.6em;width:min(84vw,380px);text-align:center;font-size:18px;line-height:1.9;letter-spacing:.08em;transition:opacity .8s}
+#form{display:none;gap:8px;width:min(84vw,380px)}
+#form input{flex:1;min-width:0;background:rgba(255,255,255,.07);border:1px solid rgba(243,236,216,.35);border-radius:999px;color:inherit;padding:12px 18px;font:inherit;font-size:16px}
+button{background:#f1e2b4;color:#0b1029;border:0;border-radius:999px;padding:12px 20px;font:inherit;font-size:16px;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid #fff7dc;outline-offset:3px}
+#again{display:none;background:none;color:#f3ecd8;border:1px solid rgba(243,236,216,.35)}
+.full .shade{opacity:0}.full .moon{box-shadow:0 0 110px rgba(255,240,190,.6)}.full .ring{border-color:transparent}.full #word{opacity:1}
+.half .shade{opacity:.6}
+.lbl{position:absolute;top:50%;transform:translateY(-50%);font-size:13px;line-height:1.7;letter-spacing:.08em;white-space:nowrap;pointer-events:none;font-style:italic;transition:color 2.4s}
+.lbl-r{left:calc(100% + 16px);color:#f1e2b4}
+.lbl-l{right:calc(100% + 16px);text-align:right;color:rgba(170,184,225,.75)}
+.full .lbl-l{color:#f1e2b4}
+#stage{isolation:isolate}
+#msgwrap{position:relative;display:flex;justify-content:center;margin:24px 0}
+#msg{position:relative;z-index:1;text-shadow:0 0 10px #0b1029,0 0 4px #0b1029}
+#rose{position:absolute;left:50%;top:50%;width:190px;height:190px;margin:-95px 0 0 -95px;opacity:0;transition:opacity 2.4s;pointer-events:none}
+#globe{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;z-index:-1;opacity:0;transform:translateY(0) scale(.1);transition:transform 3.4s cubic-bezier(.2,.7,.2,1) .3s,opacity 2.4s .3s;pointer-events:none;filter:drop-shadow(0 0 12px rgba(255,240,190,.6))}
+#globe.on{opacity:1;transform:translateY(-150px) scale(1)}
+.wave{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,236,170,.55);opacity:0;pointer-events:none;z-index:-1}
+.spread .wave{animation:wv 6s ease-out infinite}
+@keyframes wv{0%{transform:scale(1);opacity:.55}100%{transform:scale(4.2);opacity:0}}
+@media (prefers-reduced-motion:reduce){.spread .wave{animation:none}}
+.tp{display:inline-block;border:1px solid rgba(243,236,216,.6);border-radius:999px;padding:6px 28px;font-size:16px;letter-spacing:.2em;animation:bt 2.4s ease-in-out infinite}
+@keyframes bt{50%{background:rgba(243,236,216,.16);box-shadow:0 0 18px rgba(255,240,190,.4)}}
+.pulse{position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,240,190,.7);opacity:0;pointer-events:none;z-index:-1}
+#stage:not(.half):not(.full) .pulse{animation:pl 2.4s ease-out infinite}
+@keyframes pl{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.7);opacity:0}}
+@media (prefers-reduced-motion:reduce){.tp,.pulse{animation:none!important}}
+#sea{position:fixed;inset:0;width:100%;height:100%;z-index:5;cursor:pointer;transition:opacity 1.8s ease}
+#seaMsg{position:fixed;left:0;right:0;z-index:6;text-align:center;letter-spacing:.1em;pointer-events:none;transition:opacity 1.8s ease;text-shadow:0 0 14px #04152b}
+#seaTop{top:calc(env(safe-area-inset-top,0px) + 7vh);font-size:19px;line-height:1.9}
+#seaBot{bottom:calc(env(safe-area-inset-bottom,0px) + 7vh);font-size:14px;opacity:.7}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important}}
+</style>
+</head>
+<body>
+<canvas id="sea"></canvas>
+<div id="seaTop" class="sm" style="font-size:28px;font-style:italic;letter-spacing:.16em">Love&nbsp; myself</div>
+<div id="seaBot" class="sm"><span class="tp">tap</span></div>
+<div id="stage"><svg id="globe" viewBox="0 0 64 64"><defs><radialGradient id="gg" cx=".35" cy=".3"><stop offset="0" stop-color="#8fd3f0"/><stop offset="1" stop-color="#1c5f8f"/></radialGradient><clipPath id="gc"><circle cx="32" cy="32" r="30"/></clipPath></defs><circle cx="32" cy="32" r="30" fill="url(#gg)"/><g clip-path="url(#gc)" fill="#8fcf9f" opacity=".85"><path d="M14 18c8-6 16-2 14 6s-10 8-12 16-8 0-6-10z"/><path d="M36 14c8-2 14 4 12 10s-6 4-6 12 6 10-2 14-8-10-6-16-4-10 2-20z"/></g><g fill="none" stroke="#fff" stroke-opacity=".25"><ellipse cx="32" cy="32" rx="12" ry="30"/><path d="M2 32h60M6 18h52M6 46h52"/></g><g fill="#ffe9a8"><circle cx="20" cy="26" r="2"/><circle cx="42" cy="22" r="2"/><circle cx="38" cy="42" r="2"/><circle cx="24" cy="44" r="1.6"/></g></svg><div class="wave"></div><div class="wave" style="animation-delay:2s"></div><div class="wave" style="animation-delay:4s"></div><div class="pulse"></div><div class="ring"></div><div class="moon"></div><div class="shade"></div><div id="word"></div><div class="lbl lbl-l">Can’t love<br>myself</div><div class="lbl lbl-r">Love<br>myself</div></div>
+<div id="msgwrap"><svg id="rose" viewBox="0 0 200 200"><defs><path id="pt" d="M100 100C55 85 50 25 100 22C150 25 145 85 100 100Z" fill="rgba(255,205,222,.3)" stroke="rgba(255,236,244,.55)" stroke-width="1"/></defs><path d="M100 100c4-7 13-5 13 3c0 10-15 13-22 4c-8-12 4-27 19-23" fill="none" stroke="rgba(255,236,244,.6)" stroke-width="1.2"/></svg><div id="msg"><span class="tp">tap the moon</span></div></div>
+<div id="form"><input id="inp" maxlength="12" placeholder="a part of me I haven’t shown"><button id="go">Light</button></div>
+<button id="again">Again</button>
+<script>
+for(let i=0;i<40;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';s.style.opacity=.2+Math.random()*.6;document.body.appendChild(s)}
+const $=id=>document.getElementById(id),stage=$('stage'),msg=$('msg'),form=$('form');
+let step=0;
+const rose=$('rose'),globe=$('globe');let rs='';for(const [s,o] of [[1,0],[.72,36],[.46,0]])for(let i=0;i<5;i++)rs+='<use href="#pt" transform="rotate('+(o+72*i)+' 100 100) translate(100 100) scale('+s+') translate(-100 -100)"/>';rose.insertAdjacentHTML('beforeend',rs);
+const sea=$('sea'),sc=sea.getContext('2d'),rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+let seaDone=false,dpr=1;const spl=[];let lastT=0;
+function fit(){dpr=Math.min(devicePixelRatio||1,2);sea.width=innerWidth*dpr;sea.height=innerHeight*dpr}
+fit();addEventListener('resize',fit);
+function vortex(x,y,R,dir,t){
+  const g=sc.createRadialGradient(x,y,0,x,y,R);g.addColorStop(0,'rgba(2,10,25,.9)');g.addColorStop(.6,'rgba(4,20,40,.4)');g.addColorStop(1,'rgba(4,20,40,0)');
+  sc.fillStyle=g;sc.beginPath();sc.ellipse(x,y,R,R*.62,0,0,7);sc.fill();
+  sc.lineWidth=1.6;sc.lineCap='round';
+  for(let k=0;k<5;k++){let px,py;
+    for(let i=0;i<=60;i++){const u=i/60,r=R*(.06+.94*u),a=k*Math.PI*2/5+dir*(t*.55+(1-u)*6);
+      const nx=x+Math.cos(a)*r,ny=y+Math.sin(a)*r*.62;
+      if(i>0){sc.strokeStyle='rgba(205,236,246,'+(.6*Math.pow(1-u,.7)).toFixed(3)+')';sc.beginPath();sc.moveTo(px,py);sc.lineTo(nx,ny);sc.stroke()}
+      px=nx;py=ny}}
+}
+function drawSea(ts){
+  if(seaDone)return;
+  const t=ts/1000*(rm?.25:1),W=innerWidth,H=innerHeight;
+  sc.setTransform(dpr,0,0,dpr,0,0);
+  const bg=sc.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#6cc8e8');bg.addColorStop(1,'#2a82b0');
+  sc.fillStyle=bg;sc.fillRect(0,0,W,H);
+  sc.lineWidth=1;sc.strokeStyle='rgba(240,252,255,.22)';
+  for(let y=30;y<H;y+=34){sc.beginPath();for(let x=0;x<=W;x+=12){const yy=y+Math.sin(x/38+t*.7+y)*4;x?sc.lineTo(x,yy):sc.moveTo(x,yy)}sc.stroke()}
+  const m=Math.min(W,H);
+  vortex(W*.32,H*.4,m*.3,1,t);
+  vortex(W*.7,H*.7,m*.24,-1,t+2);
+  const dt=Math.min(.05,Math.max(.008,t-lastT));lastT=t;
+  if(Math.random()<.04){for(let n=0;n<8;n++){const x=Math.random()*W,y=H*.08+Math.random()*H*.86;
+    const d1=Math.pow((x-W*.32)/(m*.3),2)+Math.pow((y-H*.4)/(m*.186),2),d2=Math.pow((x-W*.7)/(m*.24),2)+Math.pow((y-H*.7)/(m*.149),2);
+    if(d1>1.3&&d2>1.3){spl.push({x,y,age:0,d:Array.from({length:8},()=>({vx:(Math.random()-.5)*60,vy:-(35+Math.random()*55),r:1+Math.random()*1.8}))});break}}}
+  for(let i=spl.length-1;i>=0;i--){const s=spl[i];s.age+=dt;if(s.age>1.1){spl.splice(i,1);continue}
+    const a=1-s.age/1.1;
+    sc.strokeStyle='rgba(255,255,255,'+(a*.6).toFixed(3)+')';sc.lineWidth=1.2;sc.beginPath();sc.ellipse(s.x,s.y,4+s.age*26,(4+s.age*26)*.5,0,0,7);sc.stroke();
+    sc.fillStyle='rgba(255,255,255,'+a.toFixed(3)+')';
+    for(const d of s.d){sc.beginPath();sc.arc(s.x+d.vx*s.age,s.y+d.vy*s.age+80*s.age*s.age,d.r,0,7);sc.fill()}}
+  requestAnimationFrame(drawSea);
+}
+requestAnimationFrame(drawSea);
+sea.onclick=()=>{
+  sea.style.opacity=0;document.querySelectorAll('.sm').forEach(e=>e.style.opacity=0);
+  setTimeout(()=>{seaDone=true;sea.style.display='none';document.querySelectorAll('.sm').forEach(e=>e.style.display='none')},1900)
+};
+function say(t){msg.style.opacity=0;setTimeout(()=>{msg.innerHTML=t;msg.style.opacity=1},400)}
+stage.onclick=()=>{
+  if(step===0){step=1;stage.className='half';say('The part of you that can’t love<br>is also you.');rose.style.opacity=1;setTimeout(()=>{if(step===1){step=2;say('You have a half you haven’t shown yet.<br>Light it with one word.');form.style.display='flex'}},3800)}
+};
+function light(){
+  const v=$('inp').value.trim()||'as I am';
+  $('word').textContent=v;form.style.display='none';step=3;stage.className='full';
+  say('Even unseen, it’s already round.<br>Whole, just as you are.');rose.style.opacity=0;globe.classList.add('on');stage.classList.add('spread');setTimeout(()=>{if(step===3)say('And this love reaches<br>everyone.')},5200);
+  setTimeout(()=>{$('again').style.display='inline-block'},4000);
+}
+$('go').onclick=light;
+$('inp').onkeydown=e=>{if(e.key==='Enter')light()};
+$('again').onclick=()=>{step=0;stage.className='';globe.classList.remove('on');rose.style.opacity=0;$('inp').value='';$('again').style.display='none';say('<span class="tp">tap the moon</span>')};
+</script>
+</body>
+</html>
