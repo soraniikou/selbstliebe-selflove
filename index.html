@@ -33,7 +33,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #fff7dc;outline-offse
 #stage{isolation:isolate}
 #msgwrap{position:relative;display:flex;justify-content:center;margin:24px 0}
 #msg{position:relative;z-index:1;text-shadow:0 0 10px #0b1029,0 0 4px #0b1029}
-#rose{position:absolute;left:50%;top:50%;width:190px;height:190px;margin:-95px 0 0 -95px;opacity:0;transition:opacity 2.4s;pointer-events:none}
+#gem{position:absolute;left:50%;top:50%;width:210px;height:210px;margin:-105px 0 0 -105px;opacity:0;transition:opacity 2.4s;pointer-events:none}
 #globe{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;z-index:-1;opacity:0;transform:translateY(0) scale(.1);transition:transform 3.4s cubic-bezier(.2,.7,.2,1) .3s,opacity 2.4s .3s;pointer-events:none;filter:drop-shadow(0 0 12px rgba(255,240,190,.6))}
 #globe.on{opacity:1;transform:translateY(-150px) scale(1)}
 .wave{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,236,170,.55);opacity:0;pointer-events:none;z-index:-1}
@@ -58,14 +58,14 @@ button:focus-visible,input:focus-visible{outline:2px solid #fff7dc;outline-offse
 <div id="seaTop" class="sm" style="font-size:28px;font-style:italic;letter-spacing:.16em">Love&nbsp; myself</div>
 <div id="seaBot" class="sm"><span class="tp">tap</span></div>
 <div id="stage"><svg id="globe" viewBox="0 0 64 64"><defs><radialGradient id="gg" cx=".35" cy=".3"><stop offset="0" stop-color="#8fd3f0"/><stop offset="1" stop-color="#1c5f8f"/></radialGradient><clipPath id="gc"><circle cx="32" cy="32" r="30"/></clipPath></defs><circle cx="32" cy="32" r="30" fill="url(#gg)"/><g clip-path="url(#gc)" fill="#8fcf9f" opacity=".85"><path d="M14 18c8-6 16-2 14 6s-10 8-12 16-8 0-6-10z"/><path d="M36 14c8-2 14 4 12 10s-6 4-6 12 6 10-2 14-8-10-6-16-4-10 2-20z"/></g><g fill="none" stroke="#fff" stroke-opacity=".25"><ellipse cx="32" cy="32" rx="12" ry="30"/><path d="M2 32h60M6 18h52M6 46h52"/></g><g fill="#ffe9a8"><circle cx="20" cy="26" r="2"/><circle cx="42" cy="22" r="2"/><circle cx="38" cy="42" r="2"/><circle cx="24" cy="44" r="1.6"/></g></svg><div class="wave"></div><div class="wave" style="animation-delay:2s"></div><div class="wave" style="animation-delay:4s"></div><div class="pulse"></div><div class="ring"></div><div class="moon"></div><div class="shade"></div><div id="word"></div><div class="lbl lbl-l">Can’t love<br>myself</div><div class="lbl lbl-r">Love<br>myself</div></div>
-<div id="msgwrap"><svg id="rose" viewBox="0 0 200 200"><defs><path id="pt" d="M100 100C55 85 50 25 100 22C150 25 145 85 100 100Z" fill="rgba(255,205,222,.3)" stroke="rgba(255,236,244,.55)" stroke-width="1"/></defs><path d="M100 100c4-7 13-5 13 3c0 10-15 13-22 4c-8-12 4-27 19-23" fill="none" stroke="rgba(255,236,244,.6)" stroke-width="1.2"/></svg><div id="msg"><span class="tp">tap the moon</span></div></div>
+<div id="msgwrap"><svg id="gem" viewBox="0 0 200 200" aria-hidden="true"><defs><radialGradient id="carn" cx="34%" cy="30%" r="72%"><stop offset="0%" stop-color="#ffc7a8"/><stop offset="18%" stop-color="#ff4d2e"/><stop offset="54%" stop-color="#c81018"/><stop offset="100%" stop-color="#5c0610"/></radialGradient><linearGradient id="stem" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d42028"/><stop offset="100%" stop-color="#5c0610"/></linearGradient><filter id="gemglow" x="-45%" y="-45%" width="190%" height="190%"><feGaussianBlur stdDeviation="3.2" result="blur"/><feFlood flood-color="#ff2a22" flood-opacity=".6" result="color"/><feComposite in="color" in2="blur" operator="in" result="glow"/><feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge></filter><path id="leaf" d="M100 108C70 104 56 78 66 56C74 40 92 36 100 52C108 36 126 40 134 56C144 78 130 104 100 108Z"/></defs><g filter="url(#gemglow)" transform="translate(0 -8)"><path d="M96.5 152c-1.5 12-.5 26 3.5 36 4-10 5-24 3.5-36z" fill="url(#stem)"/><g fill="#4a070e" transform="translate(1.4 2.6)"><use href="#leaf"/><use href="#leaf" transform="rotate(90 100 100)"/><use href="#leaf" transform="rotate(180 100 100)"/><use href="#leaf" transform="rotate(270 100 100)"/></g><g stroke="#ffd0c4" stroke-width="1.15" stroke-linejoin="round"><use href="#leaf" fill="url(#carn)"/><use href="#leaf" fill="url(#carn)" transform="rotate(90 100 100)"/><use href="#leaf" fill="url(#carn)" transform="rotate(180 100 100)"/><use href="#leaf" fill="url(#carn)" transform="rotate(270 100 100)"/></g><circle cx="100" cy="100" r="9" fill="#e12622"/><circle cx="96" cy="95" r="3.6" fill="#fff" opacity=".5"/><g fill="#fff"><ellipse cx="86" cy="56" rx="11" ry="5.5" opacity=".8" transform="rotate(-32 86 56)"/><ellipse cx="128" cy="84" rx="9" ry="4.4" opacity=".55" transform="rotate(18 128 84)"/><ellipse cx="74" cy="90" rx="8" ry="4" opacity=".4" transform="rotate(-55 74 90)"/><circle cx="80" cy="50" r="1.7"/></g></g></svg><div id="msg"><span class="tp">tap the moon</span></div></div>
 <div id="form"><input id="inp" maxlength="12" placeholder="a part of me I haven’t shown"><button id="go">Light</button></div>
 <button id="again">Again</button>
 <script>
 for(let i=0;i<40;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';s.style.opacity=.2+Math.random()*.6;document.body.appendChild(s)}
 const $=id=>document.getElementById(id),stage=$('stage'),msg=$('msg'),form=$('form');
 let step=0;
-const rose=$('rose'),globe=$('globe');let rs='';for(const [s,o] of [[1,0],[.72,36],[.46,0]])for(let i=0;i<5;i++)rs+='<use href="#pt" transform="rotate('+(o+72*i)+' 100 100) translate(100 100) scale('+s+') translate(-100 -100)"/>';rose.insertAdjacentHTML('beforeend',rs);
+const gem=$('gem'),globe=$('globe');
 const sea=$('sea'),sc=sea.getContext('2d'),rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
 let seaDone=false,dpr=1;const spl=[];let lastT=0;
 function fit(){dpr=Math.min(devicePixelRatio||1,2);sea.width=innerWidth*dpr;sea.height=innerHeight*dpr}
@@ -104,22 +104,22 @@ function drawSea(ts){
 }
 requestAnimationFrame(drawSea);
 sea.onclick=()=>{
-  sea.style.opacity=0;document.querySelectorAll('.sm').forEach(e=>e.style.opacity=0);
+  sea.style.opacity=0;document.querySelectorAll('.sm').forEach(e=>e.style.opacity=0);gem.style.opacity=1;
   setTimeout(()=>{seaDone=true;sea.style.display='none';document.querySelectorAll('.sm').forEach(e=>e.style.display='none')},1900)
 };
 function say(t){msg.style.opacity=0;setTimeout(()=>{msg.innerHTML=t;msg.style.opacity=1},400)}
 stage.onclick=()=>{
-  if(step===0){step=1;stage.className='half';say('The part of you that can’t love<br>is also you.');rose.style.opacity=1;setTimeout(()=>{if(step===1){step=2;say('You have a half you haven’t shown yet.<br>Light it with one word.');form.style.display='flex'}},3800)}
+  if(step===0){step=1;stage.className='half';say('The part of you that can’t love<br>is also you.');setTimeout(()=>{if(step===1){step=2;say('You have a half you haven’t shown yet.<br>Light it with one word.');form.style.display='flex'}},3800)}
 };
 function light(){
   const v=$('inp').value.trim()||'as I am';
   $('word').textContent=v;form.style.display='none';step=3;stage.className='full';
-  say('Even unseen, it’s already round.<br>Whole, just as you are.');rose.style.opacity=0;globe.classList.add('on');stage.classList.add('spread');setTimeout(()=>{if(step===3)say('And this love reaches<br>everyone.')},5200);
+  say('Even unseen, it’s already round.<br>Whole, just as you are.');gem.style.opacity=0;globe.classList.add('on');stage.classList.add('spread');setTimeout(()=>{if(step===3)say('And this love reaches<br>everyone.')},5200);
   setTimeout(()=>{$('again').style.display='inline-block'},4000);
 }
 $('go').onclick=light;
 $('inp').onkeydown=e=>{if(e.key==='Enter')light()};
-$('again').onclick=()=>{step=0;stage.className='';globe.classList.remove('on');rose.style.opacity=0;$('inp').value='';$('again').style.display='none';say('<span class="tp">tap the moon</span>')};
+$('again').onclick=()=>{step=0;stage.className='';globe.classList.remove('on');gem.style.opacity=1;$('inp').value='';$('again').style.display='none';say('<span class="tp">tap the moon</span>')};
 </script>
 </body>
 </html>
