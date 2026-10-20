@@ -33,8 +33,11 @@ button:focus-visible,input:focus-visible{outline:2px solid #fff7dc;outline-offse
 .lbl-l{right:calc(100% + 16px);text-align:right;color:rgba(170,184,225,.75)}
 .full .lbl-l{color:#f1e2b4}
 #stage{isolation:isolate}
-#msgwrap{position:relative;display:flex;justify-content:center;margin:24px 0}
+#msgwrap{position:relative;z-index:6;display:flex;justify-content:center;margin:24px 0}
+#form,#again{position:relative;z-index:6}
 #msg{position:relative;z-index:1;text-shadow:0 0 10px #0b1029,0 0 4px #0b1029}
+#scene.on ~ #msgwrap #msg{background:rgba(8,12,28,.5);border-radius:16px;padding:8px 16px}
+#scene.on ~ #form input{background:rgba(8,12,28,.62)}
 #gem{position:absolute;left:50%;top:50%;width:210px;height:210px;margin:-105px 0 0 -105px;opacity:0;filter:blur(3.5px) saturate(.8);transition:opacity 2.4s;pointer-events:none}
 #globe{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;z-index:-1;opacity:0;transform:translateY(0) scale(.1);transition:transform 3.4s cubic-bezier(.2,.7,.2,1) .3s,opacity 2.4s .3s;pointer-events:none;filter:drop-shadow(0 0 12px rgba(255,240,190,.6))}
 #globe.on{opacity:1;transform:translateY(-150px) scale(1)}
@@ -48,8 +51,8 @@ button:focus-visible,input:focus-visible{outline:2px solid #fff7dc;outline-offse
 #stage:not(.half):not(.full) .pulse{animation:pl 2.4s ease-out infinite}
 @keyframes pl{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.7);opacity:0}}
 @media (prefers-reduced-motion:reduce){.tp,.pulse{animation:none!important}}
-#scene{position:fixed;inset:0;z-index:4;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0;pointer-events:none;background:#15243f}
-#scene.on{opacity:1;pointer-events:auto}
+#scene{position:fixed;inset:0;z-index:4;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0;pointer-events:none;background:#15243f;transition:opacity 2.4s ease}
+#scene.on{opacity:1}
 #sea{position:fixed;inset:0;width:100%;height:100%;z-index:5;cursor:pointer;transition:opacity 1.8s ease}
 #seaMsg{position:fixed;left:0;right:0;z-index:6;text-align:center;letter-spacing:.1em;pointer-events:none;transition:opacity 1.8s ease;text-shadow:0 0 14px #04152b}
 #seaTop{top:calc(env(safe-area-inset-top,0px) + 7vh);font-size:19px;line-height:1.9}
@@ -109,13 +112,12 @@ function drawSea(ts){
 }
 requestAnimationFrame(drawSea);
 sea.onclick=()=>{
-  const scene=$('scene');scene.style.transition='none';scene.classList.add('on');
   sea.style.opacity=0;document.querySelectorAll('.sm').forEach(e=>e.style.opacity=0);
   setTimeout(()=>{seaDone=true;sea.style.display='none';document.querySelectorAll('.sm').forEach(e=>e.style.display='none')},1900)
 };
 function say(t){msg.style.opacity=0;setTimeout(()=>{msg.innerHTML=t;msg.style.opacity=1},400)}
 stage.onclick=()=>{
-  if(step===0){step=1;stage.className='half';say('The part of you that can’t love<br>is also you.');gem.style.opacity=.9;setTimeout(()=>{if(step===1){step=2;say('You have a half you haven’t shown yet.<br>Light it with one word.');form.style.display='flex'}},3800)}
+  if(step===0){step=1;stage.className='half';say('The part of you that can’t love<br>is also you.');$('scene').classList.add('on');setTimeout(()=>{if(step===1){step=2;say('You have a half you haven’t shown yet.<br>Light it with one word.');form.style.display='flex'}},3800)}
 };
 function light(){
   const v=$('inp').value.trim()||'as I am';
@@ -125,7 +127,7 @@ function light(){
 }
 $('go').onclick=light;
 $('inp').onkeydown=e=>{if(e.key==='Enter')light()};
-$('again').onclick=()=>{step=0;stage.className='';globe.classList.remove('on');gem.style.opacity=0;$('inp').value='';$('again').style.display='none';say('<span class="tp">tap the moon</span>')};
+$('again').onclick=()=>{step=0;stage.className='';globe.classList.remove('on');gem.style.opacity=0;$('scene').classList.remove('on');$('inp').value='';$('again').style.display='none';say('<span class="tp">tap the moon</span>')};
 </script>
 </body>
 </html>
