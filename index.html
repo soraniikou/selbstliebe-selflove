@@ -33,7 +33,7 @@ button:focus-visible,input:focus-visible{outline:2px solid #fff7dc;outline-offse
 .lbl-l{right:calc(100% + 16px);text-align:right;color:rgba(170,184,225,.75)}
 .full .lbl-l{color:#f1e2b4}
 #stage{isolation:isolate}
-#msgwrap{position:relative;z-index:6;display:flex;justify-content:center;margin:24px 0}
+#msgwrap{position:relative;z-index:3;display:flex;justify-content:center;margin:24px 0}
 #form,#again{position:relative;z-index:6}
 #msg{position:relative;z-index:1;text-shadow:0 0 10px #0b1029,0 0 4px #0b1029}
 #scene.on ~ #msgwrap #msg{background:rgba(8,12,28,.5);border-radius:16px;padding:8px 16px}
@@ -112,7 +112,7 @@ function drawSea(ts){
 }
 requestAnimationFrame(drawSea);
 sea.onclick=()=>{
-  sea.style.opacity=0;document.querySelectorAll('.sm').forEach(e=>e.style.opacity=0);
+  sea.style.opacity=0;document.querySelectorAll('.sm').forEach(e=>e.style.opacity=0);$('msgwrap').style.zIndex=6;
   setTimeout(()=>{seaDone=true;sea.style.display='none';document.querySelectorAll('.sm').forEach(e=>e.style.display='none')},1900)
 };
 function say(t){msg.style.opacity=0;setTimeout(()=>{msg.innerHTML=t;msg.style.opacity=1},400)}
