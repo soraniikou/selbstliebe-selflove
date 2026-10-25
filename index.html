@@ -84,14 +84,22 @@ const sea=$('sea'),sc=sea.getContext('2d'),rm=matchMedia('(prefers-reduced-motio
 let seaDone=false,dpr=1;const spl=[];let lastT=0;
 function fit(){dpr=Math.min(devicePixelRatio||1,2);sea.width=innerWidth*dpr;sea.height=innerHeight*dpr;fitLamps()}
 fit();addEventListener('resize',fit);
-function vortex(x,y,R,dir,t){
-  const g=sc.createRadialGradient(x,y,0,x,y,R);g.addColorStop(0,'rgba(2,10,25,.9)');g.addColorStop(.6,'rgba(4,20,40,.4)');g.addColorStop(1,'rgba(4,20,40,0)');
+function gate(sec,shift){
+  const x=(sec+shift)%8,f=.8;
+  if(x<f)return x/f;
+  if(x<4)return 1;
+  if(x<4+f)return 1-(x-4)/f;
+  return 0;
+}
+function vortex(x,y,R,dir,t,fade){
+  if(fade<=.01)return;
+  const g=sc.createRadialGradient(x,y,0,x,y,R);g.addColorStop(0,'rgba(2,10,25,'+(0.9*fade).toFixed(3)+')');g.addColorStop(.6,'rgba(4,20,40,'+(0.4*fade).toFixed(3)+')');g.addColorStop(1,'rgba(4,20,40,0)');
   sc.fillStyle=g;sc.beginPath();sc.ellipse(x,y,R,R*.62,0,0,7);sc.fill();
   sc.lineWidth=1.6;sc.lineCap='round';
   for(let k=0;k<5;k++){let px,py;
     for(let i=0;i<=60;i++){const u=i/60,r=R*(.06+.94*u),a=k*Math.PI*2/5+dir*(t*.55+(1-u)*6);
       const nx=x+Math.cos(a)*r,ny=y+Math.sin(a)*r*.62;
-      if(i>0){sc.strokeStyle='rgba(205,236,246,'+(.6*Math.pow(1-u,.7)).toFixed(3)+')';sc.beginPath();sc.moveTo(px,py);sc.lineTo(nx,ny);sc.stroke()}
+      if(i>0){sc.strokeStyle='rgba(205,236,246,'+(fade*.6*Math.pow(1-u,.7)).toFixed(3)+')';sc.beginPath();sc.moveTo(px,py);sc.lineTo(nx,ny);sc.stroke()}
       px=nx;py=ny}}
 }
 function drawSea(ts){
@@ -102,9 +110,9 @@ function drawSea(ts){
   sc.fillStyle=bg;sc.fillRect(0,0,W,H);
   sc.lineWidth=1;sc.strokeStyle='rgba(240,252,255,.22)';
   for(let y=30;y<H;y+=34){sc.beginPath();for(let x=0;x<=W;x+=12){const yy=y+Math.sin(x/38+t*.7+y)*4;x?sc.lineTo(x,yy):sc.moveTo(x,yy)}sc.stroke()}
-  const m=Math.min(W,H);
-  vortex(W*.32,H*.4,m*.3,1,t);
-  vortex(W*.7,H*.7,m*.24,-1,t+2);
+  const m=Math.min(W,H),sec=ts/1000,spin=rm?0:sec;
+  vortex(W*.32,H*.4,m*.3,1,spin,gate(sec,0));
+  vortex(W*.7,H*.7,m*.24,-1,spin,gate(sec,4));
   const dt=Math.min(.05,Math.max(.008,t-lastT));lastT=t;
   if(Math.random()<.04){for(let n=0;n<8;n++){const x=Math.random()*W,y=H*.08+Math.random()*H*.86;
     const d1=Math.pow((x-W*.32)/(m*.3),2)+Math.pow((y-H*.4)/(m*.186),2),d2=Math.pow((x-W*.7)/(m*.24),2)+Math.pow((y-H*.7)/(m*.149),2);
