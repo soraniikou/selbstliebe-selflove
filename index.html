@@ -40,9 +40,14 @@ button:focus-visible,input:focus-visible{outline:2px solid #fff7dc;outline-offse
 #msgwrap{position:relative;z-index:3;display:flex;justify-content:center;margin:24px 0;pointer-events:none}
 #form,#again{position:relative;z-index:6}
 #msg{position:relative;z-index:1;text-shadow:0 0 10px #0b1029,0 0 4px #0b1029}
-#scene.on ~ #msgwrap,#guard.on ~ #msgwrap{z-index:8}
-#scene.on ~ #msgwrap #msg,#guard.on ~ #msgwrap #msg{background:rgba(8,12,28,.94);color:#fff6e4;text-shadow:none;border:1px solid rgba(255,246,228,.35);border-radius:16px;padding:12px 18px;filter:none}
-#scene.on ~ #form input,#guard.on ~ #form input{background:rgba(8,12,28,.9);color:#fff6e4}
+body.moon #msgwrap,body.moon #form,body.moon #again{z-index:12}
+#scene.on ~ #msgwrap #msg,#guard.on ~ #msgwrap #msg,#scene.on ~ #form,#guard.on ~ #form{background:rgba(10,10,30,.75);color:#fff;font-size:18px;font-weight:500;text-shadow:0 0 8px rgba(0,0,0,.6);filter:none;opacity:1;transition:none}
+#scene.on ~ #msgwrap #msg,#guard.on ~ #msgwrap #msg{border-radius:16px;padding:12px 18px}
+#scene.on ~ #form,#guard.on ~ #form{border-radius:16px;padding:10px 12px;z-index:12}
+#scene.on ~ #form input,#guard.on ~ #form input,#scene.on ~ #form button,#guard.on ~ #form button{color:#fff;font-size:18px;font-weight:500;text-shadow:0 0 8px rgba(0,0,0,.6);opacity:1}
+#scene.on ~ #form input,#guard.on ~ #form input{background:transparent;border-color:rgba(255,255,255,.45)}
+#scene.on ~ #form input::placeholder,#guard.on ~ #form input::placeholder{color:rgba(255,255,255,.78);opacity:1}
+#scene.on ~ #form button,#guard.on ~ #form button{background:transparent;border:1px solid rgba(255,255,255,.7)}
 #gem{position:absolute;left:50%;top:50%;width:210px;height:210px;margin:-105px 0 0 -105px;opacity:0;filter:blur(3.5px) saturate(.8);transition:opacity 2.4s;pointer-events:none}
 #globe{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;z-index:-1;opacity:0;transform:translateY(0) scale(.1);transition:transform 3.4s cubic-bezier(.2,.7,.2,1) .3s,opacity 2.4s .3s;pointer-events:none;filter:drop-shadow(0 0 12px rgba(255,240,190,.6))}
 #globe.on{opacity:1;transform:translateY(-150px) scale(1)}
@@ -58,8 +63,13 @@ button:focus-visible,input:focus-visible{outline:2px solid #fff7dc;outline-offse
 @media (prefers-reduced-motion:reduce){.tp,.pulse{animation:none!important}}
 #scene{position:fixed;inset:0;z-index:4;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0;pointer-events:none;background:#15243f;transition:opacity 2.4s ease}
 #scene.on{opacity:1}
-#guard{position:fixed;z-index:4;left:50%;top:50%;width:min(92vw,calc(88vh * 3 / 4));height:min(88vh,calc(92vw * 4 / 3));transform:translate(-50%,-50%);object-fit:cover;opacity:0;pointer-events:none;filter:saturate(1.02) brightness(1.04);-webkit-mask-image:radial-gradient(ellipse at 50% 46%,#000 42%,rgba(0,0,0,.55) 64%,transparent 80%);mask-image:radial-gradient(ellipse at 50% 46%,#000 42%,rgba(0,0,0,.55) 64%,transparent 80%);transition:opacity 2.8s ease}
+#guard{position:fixed;z-index:4;left:50%;top:50%;width:min(92vw,calc(88vh * 3 / 4));height:min(88vh,calc(92vw * 4 / 3));transform:translate(-50%,-50%);opacity:0;pointer-events:none;transition:opacity 2.8s ease}
+#guard img{display:block;width:100%;height:100%;object-fit:cover;filter:blur(1.6px) saturate(1.08) brightness(1.08) drop-shadow(0 0 18px rgba(255,220,160,.5));-webkit-mask-image:radial-gradient(ellipse at 50% 46%,#000 42%,rgba(0,0,0,.55) 64%,transparent 80%);mask-image:radial-gradient(ellipse at 50% 46%,#000 42%,rgba(0,0,0,.55) 64%,transparent 80%)}
 #guard.on{opacity:1}
+#hair{position:absolute;left:14%;top:6%;width:72%;height:70%;overflow:visible;pointer-events:none}
+#hair .locks{transform-box:view-box;transform-origin:150px 96px;animation:hairSway 7s ease-in-out infinite}
+@keyframes hairSway{0%,100%{transform:rotate(-2.2deg)}50%{transform:rotate(2.4deg)}}
+@media (prefers-reduced-motion:reduce){#hair .locks{animation:none}}
 #guard.on ~ #stage{opacity:0;pointer-events:none}
 #lamps{position:fixed;inset:0;z-index:4;overflow:hidden;pointer-events:none;opacity:0}
 #scene.on ~ #lamps.lit{opacity:1}
@@ -79,7 +89,7 @@ body:not(.moon) #stage,body:not(.moon) #msgwrap{visibility:hidden}
 <div id="seaTop" class="sm" style="font-size:28px;font-style:italic;letter-spacing:.16em">Love&nbsp; myself</div>
 <div id="seaBot" class="sm"><span class="tp">tap</span></div>
 <img id="scene" src="scene.jpg" alt="月明かりの谷と赤い花畑">
-<img id="guard" src="ariel.jpg" alt="柔らかく寄り添う天使アリエル">
+<div id="guard"><img src="ariel.jpg" alt="柔らかく寄り添う天使アリエル"><svg id="hair" viewBox="0 0 300 460" aria-hidden="true"><defs><linearGradient id="hairGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff8ea"/><stop offset="38%" stop-color="#f4d48a"/><stop offset="100%" stop-color="#fff4dc" stop-opacity="0"/></linearGradient><filter id="hairSoft" x="-35%" y="-35%" width="170%" height="170%"><feGaussianBlur stdDeviation="1.7"/></filter></defs><g filter="url(#hairSoft)"><g class="locks" fill="url(#hairGold)"><path d="M156 92C124 102 96 132 86 176C74 228 86 286 112 334C122 286 132 220 150 164C156 130 158 108 156 92Z"/><path d="M144 92C176 102 204 132 214 176C226 228 214 286 188 334C178 286 168 220 150 164C144 130 142 108 144 92Z"/><path d="M150 100C128 138 118 196 122 268C126 330 138 378 150 410C162 378 174 330 178 268C182 196 172 138 150 100Z"/><path d="M150 96C108 118 78 168 70 230C64 278 78 318 98 340C90 270 104 190 140 140C146 118 150 104 150 96Z"/><path d="M150 96C192 118 222 168 230 230C236 278 222 318 202 340C210 270 196 190 160 140C154 118 150 104 150 96Z"/></g></g></svg></div>
 <div id="stage"><svg id="globe" viewBox="0 0 64 64"><defs><radialGradient id="gg" cx=".35" cy=".3"><stop offset="0" stop-color="#8fd3f0"/><stop offset="1" stop-color="#1c5f8f"/></radialGradient><clipPath id="gc"><circle cx="32" cy="32" r="30"/></clipPath></defs><circle cx="32" cy="32" r="30" fill="url(#gg)"/><g clip-path="url(#gc)" fill="#8fcf9f" opacity=".85"><path d="M14 18c8-6 16-2 14 6s-10 8-12 16-8 0-6-10z"/><path d="M36 14c8-2 14 4 12 10s-6 4-6 12 6 10-2 14-8-10-6-16-4-10 2-20z"/></g><g fill="none" stroke="#fff" stroke-opacity=".25"><ellipse cx="32" cy="32" rx="12" ry="30"/><path d="M2 32h60M6 18h52M6 46h52"/></g><g fill="#ffe9a8"><circle cx="20" cy="26" r="2"/><circle cx="42" cy="22" r="2"/><circle cx="38" cy="42" r="2"/><circle cx="24" cy="44" r="1.6"/></g></svg><div class="wave"></div><div class="wave" style="animation-delay:2s"></div><div class="wave" style="animation-delay:4s"></div><div class="pulse"></div><div class="ring"></div><div class="moon"></div><div class="shade"></div><div id="word"></div><div class="lbl lbl-l">Can’t love<br>myself</div><div class="lbl lbl-r">Love<br>myself</div><div id="hit"><div id="hitL"></div><div id="hitR"></div></div></div>
 <div id="msgwrap"><svg id="gem" viewBox="0 0 200 200" aria-hidden="true"><defs><radialGradient id="carn" cx="34%" cy="30%" r="78%"><stop offset="0%" stop-color="#f6d2c8" stop-opacity=".72"/><stop offset="26%" stop-color="#e08b84" stop-opacity=".58"/><stop offset="60%" stop-color="#c45a5e" stop-opacity=".46"/><stop offset="100%" stop-color="#8d3d44" stop-opacity=".28"/></radialGradient><linearGradient id="stem" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4898c" stop-opacity=".5"/><stop offset="100%" stop-color="#8a4048" stop-opacity=".22"/></linearGradient><filter id="gemglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4.5" result="blur"/><feFlood flood-color="#e07070" flood-opacity=".28" result="color"/><feComposite in="color" in2="blur" operator="in" result="glow"/><feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge></filter><path id="leaf" d="M100 108C70 104 56 78 66 56C74 40 92 36 100 52C108 36 126 40 134 56C144 78 130 104 100 108Z"/></defs><g filter="url(#gemglow)" transform="translate(0 -8)"><path d="M96.5 152c-1.5 12-.5 26 3.5 36 4-10 5-24 3.5-36z" fill="url(#stem)"/><g fill="#6a3036" opacity=".2" transform="translate(1.4 2.6)"><use href="#leaf"/><use href="#leaf" transform="rotate(90 100 100)"/><use href="#leaf" transform="rotate(180 100 100)"/><use href="#leaf" transform="rotate(270 100 100)"/></g><g stroke="#f0c8c4" stroke-width="1.15" stroke-opacity=".35" stroke-linejoin="round"><use href="#leaf" fill="url(#carn)"/><use href="#leaf" fill="url(#carn)" transform="rotate(90 100 100)"/><use href="#leaf" fill="url(#carn)" transform="rotate(180 100 100)"/><use href="#leaf" fill="url(#carn)" transform="rotate(270 100 100)"/></g><circle cx="100" cy="100" r="9" fill="#e08a86" opacity=".35"/><circle cx="96" cy="95" r="3.6" fill="#fff" opacity=".18"/><g fill="#fff"><ellipse cx="86" cy="56" rx="11" ry="5.5" opacity=".28" transform="rotate(-32 86 56)"/><ellipse cx="128" cy="84" rx="9" ry="4.4" opacity=".16" transform="rotate(18 128 84)"/><ellipse cx="74" cy="90" rx="8" ry="4" opacity=".12" transform="rotate(-55 74 90)"/></g></g></svg><div id="msg"><span class="tp">tap the moon</span></div></div>
 <div id="form"><input id="inp" maxlength="12" placeholder="a part of me I haven’t shown"><button id="go">Light</button></div>
@@ -151,10 +161,10 @@ function drawSea(ts){
 requestAnimationFrame(drawSea);
 sea.onclick=()=>{
   document.body.classList.add('moon');
-  sea.style.opacity=0;document.querySelectorAll('.sm').forEach(e=>e.style.opacity=0);$('msgwrap').style.zIndex=6;
+  sea.style.opacity=0;document.querySelectorAll('.sm').forEach(e=>e.style.opacity=0);$('msgwrap').style.zIndex=12;
   setTimeout(()=>{seaDone=true;sea.style.display='none';document.querySelectorAll('.sm').forEach(e=>e.style.display='none')},1900)
 };
-function say(t){msg.style.opacity=0;setTimeout(()=>{msg.innerHTML=t;msg.style.opacity=1},400)}
+function say(t){msg.style.opacity='1';msg.innerHTML=t}
 stage.onclick=e=>{
   if(step!==0)return;
   const cant=e.target.id==='hitL';
