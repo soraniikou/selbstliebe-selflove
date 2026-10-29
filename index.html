@@ -57,15 +57,16 @@ button:focus-visible,input:focus-visible{outline:2px solid #fff7dc;outline-offse
 @media (prefers-reduced-motion:reduce){.tp,.pulse{animation:none!important}}
 #scene{position:fixed;inset:0;z-index:4;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0;pointer-events:none;background:#15243f;transition:opacity 2.4s ease}
 #scene.on{opacity:1}
-#guard{position:fixed;z-index:4;left:50%;top:50%;width:min(92vw,calc(88vh * 231 / 297));height:min(88vh,calc(92vw * 297 / 231));transform:translate(-50%,-50%);object-fit:cover;opacity:0;pointer-events:none;filter:blur(3px) saturate(.92) brightness(1.05);-webkit-mask-image:radial-gradient(ellipse at 50% 42%,#000 32%,rgba(0,0,0,.5) 56%,transparent 76%);mask-image:radial-gradient(ellipse at 50% 42%,#000 32%,rgba(0,0,0,.5) 56%,transparent 76%);transition:opacity 2.8s ease}
-#guard.on{opacity:.94}
+#guard{position:fixed;z-index:4;left:50%;top:50%;width:min(92vw,calc(88vh * 231 / 297));height:min(88vh,calc(92vw * 297 / 231));transform:translate(-50%,-50%);object-fit:cover;opacity:0;pointer-events:none;filter:blur(3px) saturate(.96) brightness(1.22);-webkit-mask-image:radial-gradient(ellipse at 50% 42%,#000 32%,rgba(0,0,0,.5) 56%,transparent 76%);mask-image:radial-gradient(ellipse at 50% 42%,#000 32%,rgba(0,0,0,.5) 56%,transparent 76%);transition:opacity 2.8s ease}
+#guard.on{opacity:1}
 #guard.on ~ #stage{opacity:0;pointer-events:none}
 #lamps{position:fixed;inset:0;z-index:4;overflow:hidden;pointer-events:none;opacity:0}
 #scene.on ~ #lamps.lit{opacity:1}
 #lampFrame{position:absolute}
 #lampFrame .base{position:absolute;left:0;top:0;width:100%;height:100%}
 #lampFrame .lamp{position:absolute}
-#sea{position:fixed;inset:0;width:100%;height:100%;z-index:5;cursor:pointer;transition:opacity 1.8s ease}
+#sea{position:fixed;inset:0;width:100%;height:100%;z-index:5;cursor:pointer;background:#5eb8dc;transition:opacity 1.8s ease}
+body:not(.moon) #stage,body:not(.moon) #msgwrap{visibility:hidden}
 #seaMsg{position:fixed;left:0;right:0;z-index:6;text-align:center;letter-spacing:.1em;pointer-events:none;transition:opacity 1.8s ease;text-shadow:0 0 14px #04152b}
 #seaTop{top:calc(env(safe-area-inset-top,0px) + 7vh);font-size:19px;line-height:1.9}
 #seaBot{bottom:calc(env(safe-area-inset-bottom,0px) + 7vh);font-size:14px;opacity:.7}
@@ -129,7 +130,7 @@ function drawSea(ts){
   sc.fillStyle=bg;sc.fillRect(0,0,W,H);
   sc.lineWidth=1;sc.strokeStyle='rgba(240,252,255,.22)';
   for(let y=30;y<H;y+=68){sc.beginPath();for(let x=0;x<=W;x+=12){const yy=y+Math.sin(x/38+t*.7+y)*4;x?sc.lineTo(x,yy):sc.moveTo(x,yy)}sc.stroke()}
-  const m=Math.min(W,H),sec=ts/1000,spin=rm?0:sec;
+  const m=Math.min(W,H),sec=ts/1000+1.2,spin=rm?0:sec;
   const L=retarget(0,Math.floor(sec/8),W,H,m),R=retarget(1,Math.floor((sec-4)/8),W,H,m);
   sc.filter='blur(6px)';
   if(L)vortex(L.x,L.y,L.r,1,spin,gate(sec,0));
@@ -148,6 +149,7 @@ function drawSea(ts){
 }
 requestAnimationFrame(drawSea);
 sea.onclick=()=>{
+  document.body.classList.add('moon');
   sea.style.opacity=0;document.querySelectorAll('.sm').forEach(e=>e.style.opacity=0);$('msgwrap').style.zIndex=6;
   setTimeout(()=>{seaDone=true;sea.style.display='none';document.querySelectorAll('.sm').forEach(e=>e.style.display='none')},1900)
 };
@@ -203,7 +205,15 @@ function light(){
 }
 $('go').onclick=light;
 $('inp').onkeydown=e=>{if(e.key==='Enter')light()};
-$('again').onclick=()=>{step=0;stage.className='';$('hitL').style.pointerEvents='';$('hitR').style.pointerEvents='';globe.classList.remove('on');gem.style.opacity=0;$('scene').classList.remove('on');$('guard').classList.remove('on');$('inp').value='';$('again').style.display='none';say('<span class="tp">tap the moon</span>')};
+$('again').onclick=()=>{
+  const restart=seaDone;
+  step=0;stage.className='';$('hitL').style.pointerEvents='';$('hitR').style.pointerEvents='';globe.classList.remove('on');gem.style.opacity=0;$('scene').classList.remove('on');$('guard').classList.remove('on');$('inp').value='';form.style.display='none';$('again').style.display='none';$('msgwrap').style.zIndex='';
+  document.body.classList.remove('moon');
+  seaDone=false;sea.style.display='';sea.style.opacity='1';
+  document.querySelectorAll('.sm').forEach(e=>{e.style.display='';e.style.opacity=''});
+  say('<span class="tp">tap the moon</span>');
+  if(restart)requestAnimationFrame(drawSea);
+};
 mountLamps();
 </script>
 </body>
