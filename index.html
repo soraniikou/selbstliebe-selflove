@@ -64,12 +64,25 @@ body.moon #msgwrap,body.moon #form,body.moon #again{z-index:12}
 #scene{position:fixed;inset:0;z-index:4;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0;pointer-events:none;background:#15243f;transition:opacity 2.4s ease}
 #scene.on{opacity:1}
 #guard{position:fixed;z-index:4;left:50%;top:50%;width:min(92vw,calc(88vh * 3 / 4));height:min(88vh,calc(92vw * 4 / 3));transform:translate(-50%,-50%);opacity:0;pointer-events:none;transition:opacity 2.8s ease}
-#guard img{display:block;width:100%;height:100%;object-fit:cover;filter:blur(1.6px) saturate(1.08) brightness(1.08) drop-shadow(0 0 18px rgba(255,220,160,.5));-webkit-mask-image:radial-gradient(ellipse at 50% 46%,#000 42%,rgba(0,0,0,.55) 64%,transparent 80%);mask-image:radial-gradient(ellipse at 50% 46%,#000 42%,rgba(0,0,0,.55) 64%,transparent 80%)}
+#guard svg{display:block;width:100%;height:100%;overflow:visible}
+#irisName{position:absolute;left:50%;top:3%;transform:translateX(-50%);margin:0;z-index:3;color:#fff;font-size:16px;font-weight:500;letter-spacing:.2em;text-shadow:0 0 8px rgba(0,0,0,.6);background:rgba(10,10,30,.75);border-radius:999px;padding:4px 12px;filter:none;opacity:1}
+#irisFig{animation:irisFloat 6s ease-in-out infinite}
+.iris-cloud{animation:cloudDrift 12s ease-in-out infinite}
+.iris-cloud.b{animation-duration:14s;animation-delay:-3s}
+.iris-glow{animation:glowPulse 7s ease-in-out infinite}
+.iris-wing{transform-box:fill-box;transform-origin:30% 50%;animation:wingSway 8s ease-in-out infinite}
+.iris-wing.r{transform-origin:70% 50%;animation-duration:8.5s}
+.iris-cloth{transform-box:fill-box;transform-origin:50% 15%;animation:clothWave 7.5s ease-in-out infinite}
+.iris-cloth.s{animation-duration:6.5s;animation-delay:-2s}
+.iris-hair{transform-box:view-box;transform-origin:160px 140px;animation:hairSway 7s ease-in-out infinite}
+@keyframes irisFloat{0%,100%{transform:translateY(7px)}50%{transform:translateY(-11px)}}
+@keyframes cloudDrift{0%,100%{transform:translateX(-8px)}50%{transform:translateX(10px)}}
+@keyframes glowPulse{0%,100%{opacity:.5}50%{opacity:.92}}
+@keyframes wingSway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(5deg)}}
+@keyframes clothWave{0%,100%{transform:rotate(-3deg) translateX(-4px)}50%{transform:rotate(3.5deg) translateX(5px)}}
+@keyframes hairSway{0%,100%{transform:rotate(-2.4deg)}50%{transform:rotate(2.8deg)}}
 #guard.on{opacity:1}
-#hair{position:absolute;left:14%;top:6%;width:72%;height:70%;overflow:visible;pointer-events:none}
-#hair .locks{transform-box:view-box;transform-origin:150px 96px;animation:hairSway 7s ease-in-out infinite}
-@keyframes hairSway{0%,100%{transform:rotate(-2.2deg)}50%{transform:rotate(2.4deg)}}
-@media (prefers-reduced-motion:reduce){#hair .locks{animation:none}}
+@media (prefers-reduced-motion:reduce){#irisFig,.iris-cloud,.iris-glow,.iris-wing,.iris-cloth,.iris-hair{animation:none!important}}
 #guard.on ~ #stage{opacity:0;pointer-events:none}
 #lamps{position:fixed;inset:0;z-index:4;overflow:hidden;pointer-events:none;opacity:0}
 #scene.on ~ #lamps.lit{opacity:1}
@@ -89,7 +102,31 @@ body:not(.moon) #stage,body:not(.moon) #msgwrap{visibility:hidden}
 <div id="seaTop" class="sm" style="font-size:28px;font-style:italic;letter-spacing:.16em">Love&nbsp; myself</div>
 <div id="seaBot" class="sm"><span class="tp">tap</span></div>
 <img id="scene" src="scene.jpg" alt="月明かりの谷と赤い花畑">
-<div id="guard"><img src="ariel.jpg" alt="柔らかく寄り添う天使アリエル"><svg id="hair" viewBox="0 0 300 460" aria-hidden="true"><defs><linearGradient id="hairGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff8ea"/><stop offset="38%" stop-color="#f4d48a"/><stop offset="100%" stop-color="#fff4dc" stop-opacity="0"/></linearGradient><filter id="hairSoft" x="-35%" y="-35%" width="170%" height="170%"><feGaussianBlur stdDeviation="1.7"/></filter></defs><g filter="url(#hairSoft)"><g class="locks" fill="url(#hairGold)"><path d="M156 92C124 102 96 132 86 176C74 228 86 286 112 334C122 286 132 220 150 164C156 130 158 108 156 92Z"/><path d="M144 92C176 102 204 132 214 176C226 228 214 286 188 334C178 286 168 220 150 164C144 130 142 108 144 92Z"/><path d="M150 100C128 138 118 196 122 268C126 330 138 378 150 410C162 378 174 330 178 268C182 196 172 138 150 100Z"/><path d="M150 96C108 118 78 168 70 230C64 278 78 318 98 340C90 270 104 190 140 140C146 118 150 104 150 96Z"/><path d="M150 96C192 118 222 168 230 230C236 278 222 318 202 340C210 270 196 190 160 140C154 118 150 104 150 96Z"/></g></g></svg></div>
+<div id="guard"><svg viewBox="0 0 320 480" role="img" aria-label="宙に浮かぶアイリス">
+<defs>
+<radialGradient id="halo" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff6df" stop-opacity=".95"/><stop offset="45%" stop-color="#f3d7a4" stop-opacity=".45"/><stop offset="100%" stop-color="#f3d7a4" stop-opacity="0"/></radialGradient>
+<linearGradient id="wingG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fffdf8"/><stop offset="55%" stop-color="#f6e7c2"/><stop offset="100%" stop-color="#e7d7a4"/></linearGradient>
+<linearGradient id="hairG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff8ea"/><stop offset="45%" stop-color="#f0d48a"/><stop offset="100%" stop-color="#fff3d6" stop-opacity=".15"/></linearGradient>
+<linearGradient id="clothG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde4ee"/><stop offset="48%" stop-color="#e7c6ea"/><stop offset="100%" stop-color="#f8d5c8"/></linearGradient>
+<linearGradient id="rain" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#f7c5d4"/><stop offset="28%" stop-color="#f6e3b0"/><stop offset="52%" stop-color="#d7efd8"/><stop offset="76%" stop-color="#d5e2f8"/><stop offset="100%" stop-color="#e7d4f4"/></linearGradient>
+<filter id="softCloud" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="softGlow" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur stdDeviation="1.4"/></filter>
+<filter id="softHair" x="-15%" y="-15%" width="130%" height="130%"><feGaussianBlur stdDeviation=".6"/></filter>
+</defs>
+<g id="irisFig">
+<g class="iris-cloud" filter="url(#softCloud)" fill="#f4eefe" opacity=".5"><ellipse cx="78" cy="118" rx="46" ry="16"/><ellipse cx="248" cy="136" rx="50" ry="16"/></g>
+<g class="iris-cloud b" filter="url(#softCloud)" fill="#fff" opacity=".8"><ellipse cx="118" cy="430" rx="72" ry="18"/><ellipse cx="206" cy="442" rx="64" ry="16"/><ellipse cx="162" cy="418" rx="40" ry="12"/></g>
+<g class="iris-glow"><circle cx="160" cy="148" r="48" fill="url(#halo)"/><circle cx="160" cy="146" r="30" fill="none" stroke="url(#rain)" stroke-width="2.4" opacity=".55"/></g>
+<g class="iris-wing" filter="url(#softGlow)"><path fill="url(#wingG)" d="M132 188C86 150 36 154 18 190C8 214 22 242 58 250C92 258 122 236 140 210Z"/><path fill="#fff" opacity=".55" d="M126 194C92 172 58 174 36 196C64 198 98 206 124 204Z"/></g>
+<g class="iris-wing r" filter="url(#softGlow)"><path fill="url(#wingG)" d="M188 188C234 148 286 152 304 190C314 214 300 242 262 250C228 258 198 236 180 210Z"/><path fill="#fff" opacity=".5" d="M194 194C228 172 264 174 286 196C256 198 222 206 196 204Z"/></g>
+<g class="iris-hair" filter="url(#softHair)" fill="url(#hairG)"><path d="M160 132C128 140 112 168 108 204C102 250 114 310 132 352C138 300 142 240 152 190C156 164 158 144 160 132Z"/><path d="M162 134C198 146 216 178 214 220C212 270 196 328 176 366C184 300 180 230 168 184C164 160 162 144 162 134Z"/><path d="M156 140C140 180 136 250 146 330C150 370 158 400 166 418C160 350 158 250 168 186C162 164 158 148 156 140Z"/></g>
+<g class="iris-cloth" filter="url(#softGlow)"><path fill="url(#clothG)" d="M138 210C120 260 104 320 112 390C122 430 156 446 178 428C198 412 190 360 184 310C176 260 184 224 196 206C176 196 154 196 138 210Z"/><path fill="none" stroke="url(#rain)" stroke-width="2.4" stroke-linecap="round" opacity=".7" d="M148 230C132 290 128 350 142 410"/></g>
+<path fill="#f4cfe0" d="M148 198C142 230 150 250 166 258C184 248 190 222 184 196C176 184 156 184 148 198Z"/>
+<g class="iris-cloth s"><path fill="#f7d5e6" d="M176 206C210 198 246 214 268 236C274 244 262 252 246 248C220 242 196 232 178 226C174 218 174 210 176 206Z"/><path fill="#f8dccf" d="M188 214C214 220 236 232 250 244C228 236 206 228 188 226Z"/><path fill="none" stroke="url(#rain)" stroke-width="2" stroke-linecap="round" opacity=".65" d="M190 214C220 220 248 236 266 248"/><ellipse cx="262" cy="246" rx="8" ry="6" fill="#f8dccf"/></g>
+<circle cx="160" cy="150" r="20" fill="#f8ddcf"/>
+<path fill="none" stroke="#e8b7aa" stroke-width="1.3" stroke-linecap="round" opacity=".75" d="M152 152c3 2 6 2 8 0M168 152c3 2 6 2 8 0M154 160c5 3 10 3 14 0"/>
+</g>
+</svg><p id="irisName">Iris</p></div>
 <div id="stage"><svg id="globe" viewBox="0 0 64 64"><defs><radialGradient id="gg" cx=".35" cy=".3"><stop offset="0" stop-color="#8fd3f0"/><stop offset="1" stop-color="#1c5f8f"/></radialGradient><clipPath id="gc"><circle cx="32" cy="32" r="30"/></clipPath></defs><circle cx="32" cy="32" r="30" fill="url(#gg)"/><g clip-path="url(#gc)" fill="#8fcf9f" opacity=".85"><path d="M14 18c8-6 16-2 14 6s-10 8-12 16-8 0-6-10z"/><path d="M36 14c8-2 14 4 12 10s-6 4-6 12 6 10-2 14-8-10-6-16-4-10 2-20z"/></g><g fill="none" stroke="#fff" stroke-opacity=".25"><ellipse cx="32" cy="32" rx="12" ry="30"/><path d="M2 32h60M6 18h52M6 46h52"/></g><g fill="#ffe9a8"><circle cx="20" cy="26" r="2"/><circle cx="42" cy="22" r="2"/><circle cx="38" cy="42" r="2"/><circle cx="24" cy="44" r="1.6"/></g></svg><div class="wave"></div><div class="wave" style="animation-delay:2s"></div><div class="wave" style="animation-delay:4s"></div><div class="pulse"></div><div class="ring"></div><div class="moon"></div><div class="shade"></div><div id="word"></div><div class="lbl lbl-l">Can’t love<br>myself</div><div class="lbl lbl-r">Love<br>myself</div><div id="hit"><div id="hitL"></div><div id="hitR"></div></div></div>
 <div id="msgwrap"><svg id="gem" viewBox="0 0 200 200" aria-hidden="true"><defs><radialGradient id="carn" cx="34%" cy="30%" r="78%"><stop offset="0%" stop-color="#f6d2c8" stop-opacity=".72"/><stop offset="26%" stop-color="#e08b84" stop-opacity=".58"/><stop offset="60%" stop-color="#c45a5e" stop-opacity=".46"/><stop offset="100%" stop-color="#8d3d44" stop-opacity=".28"/></radialGradient><linearGradient id="stem" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4898c" stop-opacity=".5"/><stop offset="100%" stop-color="#8a4048" stop-opacity=".22"/></linearGradient><filter id="gemglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4.5" result="blur"/><feFlood flood-color="#e07070" flood-opacity=".28" result="color"/><feComposite in="color" in2="blur" operator="in" result="glow"/><feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge></filter><path id="leaf" d="M100 108C70 104 56 78 66 56C74 40 92 36 100 52C108 36 126 40 134 56C144 78 130 104 100 108Z"/></defs><g filter="url(#gemglow)" transform="translate(0 -8)"><path d="M96.5 152c-1.5 12-.5 26 3.5 36 4-10 5-24 3.5-36z" fill="url(#stem)"/><g fill="#6a3036" opacity=".2" transform="translate(1.4 2.6)"><use href="#leaf"/><use href="#leaf" transform="rotate(90 100 100)"/><use href="#leaf" transform="rotate(180 100 100)"/><use href="#leaf" transform="rotate(270 100 100)"/></g><g stroke="#f0c8c4" stroke-width="1.15" stroke-opacity=".35" stroke-linejoin="round"><use href="#leaf" fill="url(#carn)"/><use href="#leaf" fill="url(#carn)" transform="rotate(90 100 100)"/><use href="#leaf" fill="url(#carn)" transform="rotate(180 100 100)"/><use href="#leaf" fill="url(#carn)" transform="rotate(270 100 100)"/></g><circle cx="100" cy="100" r="9" fill="#e08a86" opacity=".35"/><circle cx="96" cy="95" r="3.6" fill="#fff" opacity=".18"/><g fill="#fff"><ellipse cx="86" cy="56" rx="11" ry="5.5" opacity=".28" transform="rotate(-32 86 56)"/><ellipse cx="128" cy="84" rx="9" ry="4.4" opacity=".16" transform="rotate(18 128 84)"/><ellipse cx="74" cy="90" rx="8" ry="4" opacity=".12" transform="rotate(-55 74 90)"/></g></g></svg><div id="msg"><span class="tp">tap the moon</span></div></div>
 <div id="form"><input id="inp" maxlength="12" placeholder="a part of me I haven’t shown"><button id="go">Light</button></div>
