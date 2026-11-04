@@ -47,6 +47,7 @@ https://iris-selflove-sanct![アネモネ1991](anemone1991.png)
 
 ![アネモネ728](anemone728.png)uary.lovable.app
 水色と黄色は、過去の手放しから、希望、光に向かい踏み出すタイミングを表しています。
+![アネモネ1973](anemone1973.png)
 
 ## 個人情報について
 
