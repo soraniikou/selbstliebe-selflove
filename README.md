@@ -39,6 +39,8 @@ can't love myself を押した後　何も書きたくない場合は、lightボ
 
 
 https://iris-selflove-sanct![アネモネ1991](anemone1991.png)
+
+
 紫の蝶は　癒しと浄化を表しています。
 
 
@@ -46,6 +48,8 @@ https://iris-selflove-sanct![アネモネ1991](anemone1991.png)
 
 
 ![アネモネ728](anemone728.png)uary.lovable.app
+
+
 水色と黄色は、過去の手放しから、希望、光に向かい踏み出すタイミングを表しています。
 ![アネモネ1973](anemone1973.png)
 
